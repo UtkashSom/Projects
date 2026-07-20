@@ -1,0 +1,243 @@
+{% extends "layout.html" %}
+
+{% block head %}
+<title>Admin Dashboard - Quiz Master V1</title>
+
+<!-- Bootstrap CSS -->
+<link 
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" 
+    rel="stylesheet"
+>
+
+<!-- Google Font -->
+<link 
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" 
+    rel="stylesheet"
+>
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+        background: #000;
+        color: #fff;
+        text-align: center;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* Navigation Bar */
+    .navbar {
+        width: 100%;
+        background: rgba(30, 30, 30, 0.9);
+        padding: 15px 0;
+        position: fixed;
+        top: 0;
+        left: 0;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        backdrop-filter: blur(5px);
+        z-index: 1000;
+    }
+
+    .navbar-nav {
+        display: flex;
+        gap: 30px;
+        justify-content: center;
+    }
+
+    .nav-item .nav-link {
+        font-size: 18px;
+        padding: 10px 20px;
+        border-radius: 25px;
+        transition: all 0.3s ease-in-out;
+        font-weight: 600;
+        color: white;
+    }
+
+    .nav-item .nav-link:hover {
+        background: rgba(255, 255, 255, 0.2);
+        transform: scale(1.1);
+    }
+
+    /* Content Box */
+    .container-box {
+        background: rgba(255, 255, 255, 0.08);
+        padding: 30px;
+        margin-top: 100px;
+        border-radius: 15px;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+        width: 90%;
+        max-width: 500px;
+        animation: fadeIn 1s ease-in-out;
+    }
+
+    /* Sidebar Menu */
+    .menu-wrapper {
+        background: rgba(255, 255, 255, 0.08);
+        padding: 20px;
+        border-radius: 15px;
+        width: 90%;
+        max-width: 400px;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .menu {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+        text-align: left;
+    }
+
+    .menu li {
+        padding: 12px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .menu li:last-child {
+        border-bottom: none;
+    }
+
+    .menu li a {
+        text-decoration: none;
+        color: #fff;
+        font-weight: 600;
+        display: block;
+        transition: all 0.3s ease;
+    }
+
+    .menu li a:hover {
+        color: #ff4b5c;
+        transform: scale(1.05);
+    }
+
+    .dashboard-container {
+    display: flex;
+    flex-direction: column;  /* Align items horizontally */
+    justify-content: center;
+    align-items: flex-start; /* Align to the top */
+    gap: 10px; /* Space between sidebar and content */
+    width: 110%;  
+    max-width: 1000px;
+    margin-top: 100px; /* Ensure it's below navbar */
+    } 
+
+    .menu-wrapper {
+    background: rgba(255, 255, 255, 0.08);
+    padding: 10px;
+    border-radius: 15px;
+    width: 1100px; /* Fixed width for sidebar */
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Main Content Box */
+.container-box {
+    flex: 1; /* Allow this section to take remaining space */
+    background: rgba(255, 255, 255, 0.08);
+    padding: 50px;
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+    /* Button */
+    .btn-custom {
+        display: inline-block;
+        padding: 12px 25px;
+        font-size: 16px;
+        border-radius: 25px;
+        text-decoration: none;
+        font-weight: bold;
+        transition: all 0.3s ease;
+        background: #ff4b5c;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        margin-top: 10px;
+        text-align: center;
+    }
+
+    .btn-custom:hover {
+        background: #e63950;
+        transform: scale(1.05);
+    }
+    /* Table Styling */
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+    margin-top: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #000; /* Black background */
+    border: 2px solid #007BFF; /* Blue border */
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+}
+
+th, td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+th {
+    background: rgba(255, 255, 255, 0.1);
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+td {
+    color: #fff;
+}
+
+tr:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+@media (max-width: 768px) {
+    th, td {
+        padding: 10px;
+        font-size: 14px;
+    }
+}
+
+</style>
+{% endblock %}
+
+{% block content %}
+
+<!-- Dashboard Content -->
+<div class="dashboard-container">
+    <!-- Sidebar Menu -->
+    <div class="menu-wrapper">
+        <ul class="menu">
+
+            <li><a href="{{ url_for('admin.manage_subjects') }}">📚 Manage Subjects</a></li>
+            <li><a href="{{ url_for('admin.manage_chapters') }}">📖 Manage Chapters</a></li>
+            <li><a href="{{ url_for('admin.manage_quizzes') }}">📝 Manage Quizzes</a></li>
+            <li><a href="{{ url_for('admin.view_users') }}">👥 View Users</a></li>
+            <li><a href="{{ url_for('admin.view_scores') }}">📊 View Scores</a></li>
+        </ul>
+    </div>
+
+    <!-- Main Content Box -->
+    <div class="container-lg">
+        <p>MANAGE THE QUIZ MASTER APP</p>
+        {% block crud %}{% endblock %}
+    </div>
+</div>
+{% endblock %}

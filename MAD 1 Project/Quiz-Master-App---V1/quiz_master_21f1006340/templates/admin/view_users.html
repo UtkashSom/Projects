@@ -1,0 +1,42 @@
+{% extends "admin/view_scores.html" %}
+
+{% block title %}View Users{% endblock %}
+
+{% block content %}
+<h1 class="page-title text-center mt-5">View Users</h1>
+
+<!-- Added margin-top to move the table lower -->
+<div class="table-container mt-5">
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>ID</th>
+                <th>Username</th>
+                <th>Full Name</th>
+                <th>Qualification</th>
+                <th>Date of Birth</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if users %}
+                {% for user in users %}
+                    {% if user.username.lower() != "admin@iitm.ac.in" %}
+                    <tr>
+                        <td>{{ user.id }}</td>
+                        <td>{{ user.username }}</td>
+                        <td>{{ user.fullname }}</td>
+                        <td>{{ user.qualification }}</td>
+                        <td>{{ user.dob.strftime('%Y-%m-%d') if user.dob else 'N/A' }}</td>
+                    </tr>
+                    {% endif %}
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="5" class="text-center">No users found.</td>
+                </tr>
+            {% endif %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

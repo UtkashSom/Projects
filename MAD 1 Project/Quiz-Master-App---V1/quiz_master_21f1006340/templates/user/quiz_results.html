@@ -1,0 +1,80 @@
+{% extends "layout.html" %}
+{% block title %}Quiz Results{% endblock %}
+{% block content %}
+<style>
+    body {
+        background-color: #000; /* Black background */
+        color: #fff; /* White text */
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        background-color: #111; /* Dark gray for contrast */
+    }
+
+    th, td {
+        border: 1px solid #0056b3; /* Blue border */
+        padding: 10px;
+        text-align: left;
+        color: #fff; /* White text */
+    }
+
+    th {
+        background-color: #222; /* Darker gray for header */
+    }
+
+    td {
+        background-color: #1a1a1a; /* Slightly lighter gray */
+    }
+
+    a {
+        color: #00aaff; /* Blue link */
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+</style>
+
+<h2>Quiz Results</h2>
+<p><strong>Your Score:</strong> {{ score.total_scored }} / {{ quiz.questions|length }}</p>
+
+<table>
+    <thead>
+        <tr>
+            <th>Question</th>
+            <th>Your Answer</th>
+            <th>Correct Answer</th>
+            <th>Result</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in feedback %}
+        <tr>
+            <td>{{ item.question_statement }}</td>
+            <td>
+                {% if item.user_answer %}
+                    {{ item["option" + item.user_answer|string] }}
+                {% else %}
+                    <span style="color: red;">Not Attempted</span>
+                {% endif %}
+            </td>
+            <td>{{ item["option" + item.correct_answer|string] }}</td>
+            <td>
+                {% if item.is_correct %}
+                    <span style="color: #00ff00;">✅ Correct</span>
+                {% else %}
+                    <span style="color: red;">❌ Incorrect</span>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<a href="{{ url_for('users.dashboard') }}">Back to Dashboard</a>
+{% endblock %}

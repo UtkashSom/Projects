@@ -1,0 +1,26 @@
+id: A unique identifier for each patient.
+age: Age of the patient.
+bp (Blood Pressure): Blood pressure of the patient (in mm/Hg).
+sg (Specific Gravity): A measure of urine concentration.
+al (Albumin): Albumin levels in the urine (typically measured in mg/dL).
+su (Sugar): Sugar levels in the urine.
+rbc (Red Blood Cells): Presence and type of red blood cells in urine (normal, abnormal, or missing data).
+pc (Pus Cell): Presence and type of pus cells in urine (normal, abnormal, or missing data).
+pcc (Pus Cell Clumps): Presence of pus cell clumps in urine (notpresent or present).
+ba (Bacteria): Presence of bacteria in urine (notpresent or present).
+bgr (Blood Glucose Random): Random blood glucose levels (in mg/dL).
+bu (Blood Urea): Blood urea levels (in mg/dL).
+sc (Serum Creatinine): Serum creatinine levels (in mg/dL).
+sod (Sodium): Sodium levels in the blood (in mEq/L). Some values are missing.
+pot (Potassium): Potassium levels in the blood (in mEq/L). Some values are missing.
+hemo (Hemoglobin): Hemoglobin levels (in g/dL). Some values are missing.
+pcv (Packed Cell Volume): Packed cell volume percentage.
+wc (White Blood Cell Count): White blood cell count (per cubic millimeter).
+rc (Red Blood Cell Count): Red blood cell count (in millions per cubic millimeter).
+htn (Hypertension): Presence of hypertension (yes or no).
+dm (Diabetes Mellitus): Presence of diabetes mellitus (yes or no).
+cad (Coronary Artery Disease): Presence of coronary artery disease (yes or no).
+appet (Appetite): Appetite of the patient (good or poor).
+pe (Pedal Edema): Presence of pedal edema (yes or no).
+ane (Anemia): Presence of anemia (yes or no).
+classification: Diagnosis of chronic kidney disease (ckd).

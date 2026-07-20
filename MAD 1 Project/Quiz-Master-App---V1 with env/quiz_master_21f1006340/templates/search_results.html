@@ -1,0 +1,83 @@
+{% extends "layout.html" %}
+{% block title %}Search Results{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="text-center">Search Results for "{{ query }}"</h2>
+
+    {% if users and is_admin %}
+    <h3>Users</h3>
+    <table class="table table-dark table-striped">
+        <thead>
+            <tr><th>ID</th><th>Username</th><th>Full Name</th></tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.username }}</td>
+                <td>{{ user.fullname or "N/A" }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+
+    {% if subjects %}
+    <h3>Subjects</h3>
+    <table class="table table-dark table-striped">
+        <thead>
+            <tr><th>ID</th><th>Subject Name</th></tr>
+        </thead>
+        <tbody>
+            {% for subject in subjects %}
+            <tr>
+                <td>{{ subject.id }}</td>
+                <td>{{ subject.name }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+
+    {% if quizzes %}
+    <h3>Quizzes</h3>
+    <table class="table table-dark table-striped">
+        <thead>
+            <tr><th>ID</th><th>Quiz Name</th></tr>
+        </thead>
+        <tbody>
+            {% for quiz in quizzes %}
+            <tr>
+                <td>{{ quiz.id }}</td>
+                <td>{{ quiz.name }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+
+    {% if questions and is_admin %}
+    <h3>Questions</h3>
+    <table class="table table-dark table-striped">
+        <thead>
+            <tr><th>ID</th><th>Question Text</th></tr>
+        </thead>
+        <tbody>
+            {% for question in questions %}
+            <tr>
+                <td>{{ question.id }}</td>
+                <td>{{ question.question_statement }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+
+    {% if not users and not subjects and not quizzes and not questions %}
+    <div class="d-flex justify-content-center align-items-center mt-4">
+        <p class="text-muted">No results found.</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

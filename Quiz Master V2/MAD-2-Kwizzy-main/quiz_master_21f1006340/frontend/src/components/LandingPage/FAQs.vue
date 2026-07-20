@@ -1,0 +1,132 @@
+<script setup>
+import { ref } from "vue";
+
+// FAQ items
+const items = [
+  {
+    question: "Is it really free?",
+    answer: "Yes! Unless you count your time and effort.",
+  },
+  {
+    question: "How do I become an admin?",
+    answer:
+      "Nice try, students. But seriously, only verified teachers get the magic wand.",
+  },
+  {
+    question: "What if I forget my password?",
+    answer:
+      "First, try 'password123' because let's be honest, that was probably it. If that fails, I have a fancy 'Forgot Password' button that's been waiting for its moment to shine.",
+  },
+  {
+    question: "What if I fail all the quizzes?",
+    answer:
+      "Then you'll join our exclusive "Quiz Master's Humble Learners Club." It's not a real club, but hey, failure is the first step to becoming a quiz master!",
+  },
+  {
+    question: "Is this app addictive?",
+    answer:
+      " Let's just say you might "accidentally" miss your bedtime. But hey, learning is productive, right?",
+  },
+  {
+    question: "Can Quiz Master help me impress my crush?",
+    answer:
+      "Absolutely! Just casually mention your latest quiz score and watch the sparks fly. Or not. I can't guarantee anything.",
+  },
+  {
+    question: "Can I cheat?",
+    answer:
+      "Well, Quiz Master doesn't judge… but remember, cheaters never prosper. Plus, the only person you're fooling is your own ego. I recommend winning with your brains, not your browser tabs!",
+  },
+  {
+    question: "What if I find a bug?",
+    answer:
+      "I don't like killing bugs, let that bug live. BLM [BUGS LIVE MATTER] ! But seriously, report it and I'll try to fix it as soon as I can.",
+  },
+  {
+    question: "Can I suggest a feature?",
+    answer: "Absolutely! Shoot me a DM.",
+  },
+];
+
+// Track which item is open
+const openItemIndex = ref(null);
+
+const toggleItem = (index) => {
+  openItemIndex.value = openItemIndex.value === index ? null : index;
+};
+</script>
+
+<template>
+  <div
+    id="faqs"
+    class="text-white bg-black py-[72px] sm:py-24 bg-gradient-to-t from-[#21034d] to-black"
+  >
+    <div class="container">
+      <h2 class="text-5xl font-bold tracking-tighter text-center sm:text-6xl">
+        Frequently asked questions
+      </h2>
+      <div class="max-w-xl mx-auto">
+        <p class="mt-5 text-xl text-center text-white/70">
+          Questions About the Quiz App? How Ironic.
+        </p>
+      </div>
+      <div class="max-w-2xl mx-auto mt-12">
+        <div
+          v-for="(item, index) in items"
+          :key="index"
+          class="border-b py-7 border-white/30 cursor-pointer"
+          @click="toggleItem(index)"
+        >
+          <div class="flex items-center justify-between mt-4">
+            <h3 class="text-lg font-bold">{{ item.question }}</h3>
+            <p class="text-2xl" v-if="openItemIndex === index">-</p>
+            <p class="text-2xl" v-else>+</p>
+          </div>
+          <transition
+            name="accordion"
+            enter-active-class="transition-all duration-300 ease-out"
+            leave-active-class="transition-all duration-300 ease-out"
+          >
+            <div
+              v-show="openItemIndex === index"
+              class="mt-4 text-white/70 overflow-hidden"
+            >
+              {{ item.answer }}
+            </div>
+          </transition>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<style scoped>
+#faqs {
+  font-family: Inter;
+}
+
+.container {
+  max-width: 1800px;
+  margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 0 0.5rem;
+  }
+}
+
+.accordion-enter-from,
+.accordion-leave-to {
+  height: 0;
+  opacity: 0;
+  margin-top: 0;
+}
+
+.accordion-enter-to,
+.accordion-leave-from {
+  height: auto;
+  opacity: 1;
+  margin-top: 16px;
+}
+</style>

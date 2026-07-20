@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      body {
+        font-family: Neue Montreal;
+        line-height: 2;
+        color: #ffffff !important;
+        margin: 0 auto;
+        padding: 20px;
+      }
+      .container {
+        background: url("https://drive.usercontent.google.com/download?id=1iuCYroTZUdU9PvZmxzORoXymBOjVpCQ2");
+        background-size: cover;
+        border-radius: 10px;
+        padding: 20px;
+        color: #ffffff !important;
+        max-width: 800px !important;
+        margin: 0 auto;
+      }
+      .header {
+        background-color: transparent;
+        padding: 0px 20px;
+        border-radius: 10px 10px 0 0;
+        text-align: center;
+        color: #ffffff !important;
+      }
+      .header div {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .header h2 {
+        font-family: Neue Montreal;
+        font-size: 36px;
+        letter-spacing: -1px;
+        margin-left: 10px;
+        color: #ffffff !important;
+      }
+      .header h1 {
+        font-family: "Times New Roman", Times, serif;
+        font-weight: 500;
+        letter-spacing: -2px;
+        color: #ffffff !important;
+      }
+      .header img {
+        width: 100px;
+        height: 100px;
+      }
+      .content {
+        background-color: transparent;
+        padding: 0px 20px;
+        border-radius: 0 0 10px 10px;
+        font-family: Neue Montreal;
+        color: #ffffff !important;
+      }
+      .content p {
+        font-size: 18px;
+        color: #ffffff !important;
+      }
+      .content h2 {
+        font-size: 24px;
+        color: #ffffff !important;
+      }
+      .export-details {
+        background-color: rgba(255, 255, 255, 0.1);
+        padding: 20px;
+        border-radius: 10px;
+        margin: 20px 0;
+        color: #ffffff !important;
+      }
+      .export-details ul {
+        list-style: none;
+        padding: 0;
+        color: #ffffff !important;
+      }
+      .export-details li {
+        font-size: 16px;
+        margin: 10px 0;
+        color: #ffffff !important;
+      }
+      .export-details h3 {
+        font-size: 20px;
+        color: #ffffff !important;
+      }
+      .export-details p {
+        color: #ffffff !important;
+      }
+      .warning-note {
+        background-color: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(4px);
+        padding: 15px;
+        border-radius: 10px;
+        margin: 20px 0;
+        font-size: 16px;
+        color: #ffffff !important;
+      }
+      .button {
+        display: block;
+        text-align: center;
+        padding: 12px 0px;
+        background-color: #ffffff !important;
+        color: #131313 !important;
+        font-weight: 500;
+        text-decoration: none;
+        border-radius: 5px;
+        margin: 20px auto;
+        transition: all 0.2s ease;
+        font-size: 18px;
+        width: 200px;
+      }
+      .button:hover {
+        transform: translateY(-2px);
+        scale: 0.98;
+      }
+      hr {
+        border: 0;
+        height: 1px;
+        background: #ffffff !important;
+        margin: 40px 0;
+      }
+      .footer {
+        margin-top: 20px;
+        text-align: center;
+        color: #ffffff !important;
+        font-size: 12px;
+        line-height: 1;
+        font-family: Neue Montreal;
+      }
+      .footer p {
+        color: #ffffff !important;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <div>
+          <img
+            src="https://drive.usercontent.google.com/download?id=1t1T9OVkbTji3X7bwmRHAKJhsuLvEo1O1"
+            alt="quiz master logo"
+          />
+          <h2>Quiz Master</h2>
+        </div>
+        <h1>Your Export is Ready!</h1>
+      </div>
+
+      <div class="content">
+        <h2>Hello {{ user_name }}!</h2>
+        <p>
+          Your CSV of User details has been generated successfully and is now
+          ready for download.
+        </p>
+
+        <div class="export-details">
+          <h3>Export Details:</h3>
+          <ul>
+            <li>📊 Type: CSV of User details</li>
+            <li>🕒 Generated: {{ generation_time }}</li>
+          </ul>
+        </div>
+
+        <a href="{{ download_url }}" class="button">Download Export</a>
+
+        <div class="warning-note">⚠️ {{ expiry_note }}</div>
+
+        <p>
+          If you have any questions or need assistance, please don't hesitate to
+          contact our support team.
+        </p>
+
+        <p>Best regards,<br />Team Quiz Master</p>
+      </div>
+
+      <hr />
+
+      <div class="footer">
+        <p>
+          This is an automated message from Quiz Master. Please do not reply to this
+          email.
+        </p>
+        <p>Made with some ☕, aloo bhujiya and 🤍 by Kapil :)</p>
+        <p>© 2024 Quiz Master. All rights reserved.</p>
+      </div>
+    </div>
+  </body>
+</html>

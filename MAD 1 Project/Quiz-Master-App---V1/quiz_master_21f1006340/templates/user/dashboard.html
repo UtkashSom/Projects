@@ -1,0 +1,184 @@
+{% extends "admin/layout.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+{% block head %}
+{{ super() }}
+<style>
+    body {
+        background-color: #000; /* Black background */
+        color: #fff; /* White text */
+    }
+
+    .user-details {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 30px;
+    }
+
+    .details, .stats, .quiz-history, .quiz-summary {
+        width: 100%;
+        padding: 20px;
+        border: 2px solid #0056b3; /* Blue border */
+        border-radius: 8px;
+        background-color: #111;
+    }
+
+    .key-value {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        row-gap: 12px;
+        column-gap: 10px;
+        color: #fff;
+    }
+
+    h4 {
+        margin-bottom: 15px;
+        color: #fff;
+    }
+
+    strong {
+        color: #fff;
+    }
+
+    nav ul {
+        list-style-type: none;
+        padding: 0;
+        text-align: center;
+    }
+
+    nav ul li {
+        display: inline;
+        margin-right: 15px;
+    }
+
+    nav ul li a {
+        color: #00aaff;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    nav ul li a:hover {
+        text-decoration: underline;
+    }
+
+    /* Styles for Tables */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 15px;
+        background-color: #111;
+        border: 2px solid #0056b3; /* Blue border for table */
+    }
+
+    th, td {
+        padding: 10px;
+        border: 1px solid #0056b3;
+        text-align: center;
+    }
+
+    th {
+        background-color: #0056b3;
+        color: #fff;
+    }
+
+    tr:nth-child(even) {
+        background-color: #222;
+    }
+</style>
+{% endblock %}
+
+<h1>User Dashboard</h1>
+
+<nav>
+    <ul>
+        <li><a href="{{ url_for('users.select_quiz') }}">📚 Select Quiz</a></li>
+    </ul>
+</nav>
+
+<div class="user-details">
+    <div class="details">
+        <h4>User Details</h4>
+        <div class="key-value">
+            <span><strong>Username:</strong></span>
+            <span>{{ current_user.username }}</span>
+
+            <span><strong>Full Name:</strong></span>
+            <span>{{ current_user.fullname }}</span>
+
+            <span><strong>Qualification:</strong></span>
+            <span>{{ current_user.Qualification }}</span>
+
+            <span><strong>Date of Birth:</strong></span>
+            <span>{{ current_user.dob }}</span>
+        </div>
+    </div>
+
+    <div class="stats">
+        <h4>User Summary</h4>
+        <div class="key-value">
+            <span><strong>Total Attempted Quizzes:</strong></span>
+            <span>{{ total_attempted_quizzes }}</span>
+
+            <span><strong>Average Score:</strong></span>
+            <span>{{ average_score|round(2) }}</span>
+        </div>
+    </div>
+</div>
+
+<!-- Past Quizzes Table -->
+<div class="quiz-history">
+    <h4>Past Quizzes</h4>
+    <table>
+        <thead>
+            <tr>
+                <th>Quiz Name</th>
+                <th>Attempted Time</th>
+                <th>Total Scored</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for score in scores %}
+            <tr>
+                <td>{{ score.quiz.name }}</td>
+                <td>{{ score.timestamp.strftime("%Y-%m-%d %H:%M") }}</td>
+                <td>{{ score.total_scored }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<!-- Quiz Summary Report Table -->
+<div class="quiz-summary">
+    <h4>Quiz Summary Report</h4>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Quiz Name</th>
+                <th>Your Total Attempts</th>
+                <th>Your Total Score</th>
+                <th>Overall Average Score</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for quiz in quiz_summary %}
+            <tr>
+                <td>{{ quiz.name }}</td>
+                <td>{{ quiz.user_total_attempts }}</td>
+                <td>{{ quiz.user_total_score }}</td>
+                <td>{{ quiz.overall_avg_score }}</td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="5">No quiz summary available</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+
+{% endblock %}

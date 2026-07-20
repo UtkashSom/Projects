@@ -1,0 +1,248 @@
+<!doctype html>
+<html>
+<head>
+    {% block head %}
+    <title>{% block title %}{% endblock %} - Quiz Master V1</title>
+    
+    <!-- Bootstrap CSS -->
+    <link 
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" 
+        rel="stylesheet"
+    >
+
+    <!-- Google Font -->
+    <link 
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" 
+        rel="stylesheet"
+    >
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: #121212;
+            color: #fff;
+            text-align: center;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            width: 100%;
+            background: rgba(30, 30, 30, 0.9);
+            padding: 15px 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+        }
+
+        .navbar-nav {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+        }
+
+        .nav-item .nav-link {
+            font-size: 18px;
+            padding: 10px 20px;
+            border-radius: 25px;
+            transition: all 0.3s ease-in-out;
+            font-weight: 600;
+            color: white;
+        }
+
+        .nav-item .nav-link:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.1);
+        }
+
+        /* Flash Messages */
+        .flash-messages {
+            position: fixed;
+            top: 70px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 500px;
+            z-index: 1001;
+        }
+
+        .flash-message {
+            padding: 12px;
+            margin: 5px 0;
+            border-radius: 5px;
+            text-align: center;
+            font-weight: 600;
+            animation: fadeIn 0.5s ease-in-out, fadeOut 3s ease-in-out 2s forwards;
+        }
+
+        .flash-message.success { background: #4CAF50; color: #fff; }
+        .flash-message.error { background: #ff4b5c; color: #fff; }
+        .flash-message.info { background: #2196F3; color: #fff; }
+        .flash-message.warning { background: #ff9800; color: #fff; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeOut {
+            to { opacity: 0; transform: translateY(-10px); }
+        }
+
+        /* Content Box */
+        .container-box {
+            background: rgba(255, 255, 255, 0.08);
+            padding: 30px;
+            margin-top: 100px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+            width: 90%;
+            max-width: 500px;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        /* Form Styles */
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            text-align: left;
+        }
+
+        label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #bbb;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 16px;
+        }
+
+        input:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        /* Button */
+        .btn-custom {
+            display: inline-block;
+            padding: 12px 25px;
+            font-size: 16px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            background: #ff4b5c;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        .btn-custom:hover {
+            background: #e63950;
+            transform: scale(1.05);
+        }
+
+    </style>
+    {% endblock %}
+</head>
+<body>  
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        <div class="flash-messages">
+            {% for category, message in messages %}
+                <div class="flash-message {{ category }}">{{ message }}</div>
+            {% endfor %}
+        </div>
+    {% endif %}
+    {% endwith %}
+
+    <!-- Navigation Menu -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">  
+            <form action="{{ url_for('search') }}" method="GET" class="d-flex me-2">
+                <div class="input-group">
+                    <input class="form-control" type="search" name="q" placeholder="Search..." aria-label="Search">
+                    <input type="hidden" name="role" value="{{ 'admin' if current_user.is_admin else 'user' }}">
+                    <button class="btn btn-outline-light" type="submit">Search</button>
+                </div>
+            </form>
+    
+            <button 
+                class="navbar-toggler" 
+                type="button" 
+                data-bs-toggle="collapse" 
+                data-bs-target="#navbarNav"
+                aria-controls="navbarNav"
+                aria-expanded="false" 
+                aria-label="Toggle navigation"
+            >
+                <span class="navbar-toggler-icon"></span>
+            </button>
+    
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('home') }}">🏠 Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('auth.register') }}">📝 Register</a>
+                    </li>
+                    {% if current_user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('users.dashboard') }}">📰 User Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('admin.admin_dashboard') }}">📟 Admin Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('auth.logout') }}">🔓 Logout</a>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('auth.login') }}">🔑 Login</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+
+    <!-- Main Content -->
+    <div class="container-box">
+        {% if current_user.is_authenticated %}
+        Hi {{ current_user.fullname }}!
+        {% endif %}
+        {% block content %}{% endblock %}
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

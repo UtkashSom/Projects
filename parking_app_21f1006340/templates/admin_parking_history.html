@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>All Parking Histories</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+<div class="container mt-5">
+  <h2>All Reservation Records</h2>
+  <a href="{{ url_for('admin.dashboard') }}" class="btn btn-secondary mb-3">← Back to Dashboard</a>
+  {% if history %}
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>User</th>
+        <th>Lot</th>
+        <th>Spot</th>
+        <th>Start</th>
+        <th>End</th>
+        <th>Duration (hrs)</th>
+        <th>Cost (AED)</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for res in history %}
+      <tr>
+        <td>{{ res.user.name }}</td>
+        <td>{{ res.spot.lot.prime_location_name if res.spot and res.spot.lot else 'Deleted Lot' }}</td>
+        <td>{{ res.spot.id }}</td>
+        <td>{{ res.parking_timestamp.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+        <td>{{ res.leaving_timestamp.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+        <td>
+          {% set dur = res.leaving_timestamp - res.parking_timestamp %}
+          {{ "%.2f"|format(dur.total_seconds() / 3600) }}
+        </td>
+        <td>{{ res.parking_cost }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+    <p>No completed reservations.</p>
+  {% endif %}
+</div>
+</body>
+</html>
